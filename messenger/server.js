@@ -12,9 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Run when client connects
 io.on('connection', socket => {
-    
-
-    // Welcome current user
+        // Welcome current user
     socket.emit('message', 'Welcome to Messenger');
 
     // Broadcast when a user connects
@@ -24,7 +22,11 @@ io.on('connection', socket => {
     socket.on('disconnect', () => {
         io.emit('message', 'a user has left the chat');
     });
-    
+
+    // Listen for chat message
+    socket.on('chatMessage', (msg) => {
+        io.emit('message', msg);
+    });
 });
 
 const PORT = 3000 || process.env.PORT;
