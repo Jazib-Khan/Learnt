@@ -15,20 +15,22 @@ const botName = 'Messenger Bot';
 
 // Run when client connects
 io.on('connection', socket => {
-        // Welcome current user
+    socket.on('joinRoom', ({ username, room}) => {
+    // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to Messenger'));
 
     // Broadcast when a user connects
     socket.broadcast.emit('message', formatMessage(botName, 'a user has joined the chat'));
-
-    // Runs when client disconnects
-    socket.on('disconnect', () => {
-        io.emit('message', formatMessage(botName, 'a user has left the chat'));
     });
 
     // Listen for chat message
     socket.on('chatMessage', (msg) => {
         io.emit('message', formatMessage('USER', msg));
+    });
+
+    // Runs when client disconnects
+    socket.on('disconnect', () => {
+        io.emit('message', formatMessage(botName, 'a user has left the chat'));
     });
 });
 
