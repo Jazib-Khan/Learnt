@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
+const { userJoin, getCurrentUser} = require('./utils/users');
 
 const app = express();
 const server = http.createServer(app);
@@ -16,11 +17,15 @@ const botName = 'Messenger Bot';
 // Run when client connects
 io.on('connection', socket => {
     socket.on('joinRoom', ({ username, room}) => {
+        const user = userJoin(socket.id, username, room);
+
+        socket.join(user.room);
+
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to Messenger'));
 
     // Broadcast when a user connects
-    socket.broadcast.emit('message', formatMessage(botName, 'a user has joined the chat'));
+    socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined the chat`));
     });
 
     // Listen for chat message
