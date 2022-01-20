@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 :root {
-	--dark-color-a: #667aff;
-	--dark-color-b: #7386ff;
-	--light-color: #e6e9ff;
+	--dark-color-a: #28A745;
+	--dark-color-b: #2BAE48;
+	--light-color: #FFFFFF;
+	--light-color-b: #e6e9ff;
 	--success-color: #5cb85c;
 	--error-color: #d9534f;
 }
@@ -15,7 +16,7 @@
 }
 
 body {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'serif', serif;
 	font-size: 16px;
 	background: var(--light-color);
 	margin: 20px;
@@ -94,7 +95,7 @@ a {
 .chat-messages .message {
 	padding: 10px;
 	margin-bottom: 15px;
-	background-color: var(--light-color);
+	background-color: var(--light-color-b);
 	border-radius: 5px;
 }
 
