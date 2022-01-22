@@ -22,11 +22,15 @@ router.post('/', async (req, res, next) => {
     next()
 }, saveHomeworkAndRedirect('new'))
 
+router.put('/:id', async (req, res, next) => {
+    req.homework = await Homework.findById(req.params.id)
+    next()
+}, saveHomeworkAndRedirect('edit'))
+
 router.delete('/:id', async (req, res) => {
     await Homework.findByIdAndDelete(req.params.id)
     res.redirect('/')
 })
-
 
 function saveHomeworkAndRedirect(path) {
     return async (req, res) => {
