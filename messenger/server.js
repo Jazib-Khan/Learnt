@@ -9,6 +9,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const mongoose = require('mongoose')
+const Homework =  require('./models/homework')
 const homeworkRouter = require('./routes/homeworks')
 const methodOverride = require('method-override')
 
