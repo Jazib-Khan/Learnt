@@ -4,10 +4,18 @@ const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users');
-
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
+
+app.set('view engine', 'ejs')
+
+app.get('/', async (req, res) => {
+    const homeworks = await Homework.find().sort({ createdAt: 'desc' })
+        res.render('homeworks/index', { homeworks: homeworks})
+    })
+
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public'))); 
