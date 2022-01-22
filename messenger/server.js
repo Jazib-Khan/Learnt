@@ -9,12 +9,18 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 
+
+const homeworkRouter = require('./routes/homeworks')
+
+
 app.set('view engine', 'ejs')
 
 app.get('/', async (req, res) => {
     const homeworks = await Homework.find().sort({ createdAt: 'desc' })
         res.render('homeworks/index', { homeworks: homeworks})
     })
+
+app.use('/homeworks', homeworkRouter)
 
 
 // Set static folder
