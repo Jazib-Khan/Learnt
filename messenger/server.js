@@ -8,13 +8,13 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-
 const mongoose = require('mongoose')
 const homeworkRouter = require('./routes/homeworks')
 
 mongoose.connect('mongodb://localhost/learnt')
 
 app.set('view engine', 'ejs')
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/', async (req, res) => {
     const homeworks = await Homework.find().sort({ createdAt: 'desc' })
