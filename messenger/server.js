@@ -27,7 +27,7 @@ app.use('/homeworks', homeworkRouter)
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public'))); 
 
-const botName = 'Messenger Bot';
+const botName = 'Learnt Bot';
 
 // Run when client connects
 io.on('connection', socket => {
