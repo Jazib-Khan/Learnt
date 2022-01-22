@@ -10,11 +10,13 @@ const io = socketio(server);
 
 const mongoose = require('mongoose')
 const homeworkRouter = require('./routes/homeworks')
+const methodOverride = require('method-override')
 
 mongoose.connect('mongodb://localhost/learnt')
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 
 app.get('/', async (req, res) => {
     const homeworks = await Homework.find().sort({ createdAt: 'desc' })
