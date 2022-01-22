@@ -17,6 +17,11 @@ router.get('/:slug', async (req, res) => {
     res.render('homeworks/show', { homework: homework })
 })
 
+router.delete('/:id', async (req, res) => {
+    await Homework.findByIdAndDelete(req.params.id)
+    res.redirect('/')
+})
+
 
 function saveHomeworkAndRedirect(path) {
     return async (req, res) => {
