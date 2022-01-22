@@ -6,16 +6,21 @@ router.get('/new', (req, res) => {
     res.render('homeworks/new', { homework: new Homework() })
 })
 
-router.post('/', async (req, res, next) => {
-    req.homework = new Homework()
-    next()
-}, saveHomeworkAndRedirect('new'))
+router.get('/edit/:id', async (req, res) => {
+    const homework = await Homework.findById(req.params.id)
+    res.render('homeworks/edit', { homework: homework })
+})
 
 router.get('/:slug', async (req, res) => {
     const homework = await Homework.findOne({ slug: req.params.slug })
     if (homework == null) res.redirect('/')
     res.render('homeworks/show', { homework: homework })
 })
+
+router.post('/', async (req, res, next) => {
+    req.homework = new Homework()
+    next()
+}, saveHomeworkAndRedirect('new'))
 
 router.delete('/:id', async (req, res) => {
     await Homework.findByIdAndDelete(req.params.id)
