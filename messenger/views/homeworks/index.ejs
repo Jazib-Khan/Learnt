@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <title>Learnt</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4" style="font-family:Serif" >Homework List</h1>
+        <a href="/homeworks/new" class="btn btn-success">New Homework</a>
+        <a href="./../public/index.html" class="btn btn-success">Messenger</a>
+        <% homeworks.forEach(homework => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title"><%= homework.title %></h4>
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= homework.createdAt.toLocaleDateString() %>
+                    </div>
+                    <div class="card-text mb-2"><%= homework.description %></div>
+                    <a href="homeworks/<%= homework.slug %>" class="btn btn-primary">View Content</a>
+                    <a href="homeworks/edit/<%= homework.id %>" class="btn btn-info">Edit</a>
+                    <form action="/homeworks/<%= homework.id %>?_method=DELETE" 
+                    method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
