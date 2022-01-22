@@ -28,7 +28,7 @@ app.use('/homeworks', homeworkRouter)
 
 
 // Set static folder
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 const botName = 'Learnt Bot';
 
