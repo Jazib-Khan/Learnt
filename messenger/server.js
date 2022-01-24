@@ -30,7 +30,7 @@ app.use('/homeworks', homeworkRouter)
 // Set static folder
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-const botName = 'Learnt Bot';
+const botName = 'Learnt';
 
 // Run when client connects
 io.on('connection', socket => {
@@ -40,7 +40,7 @@ io.on('connection', socket => {
         socket.join(user.room);
 
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome to Messenger'));
+    socket.emit('message', formatMessage(botName, 'Communicate with the class'));
 
     // Broadcast when a user connects
     socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined the chat`));
