@@ -7,7 +7,6 @@ const { userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/us
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
 const mongoose = require('mongoose')
 const Homework =  require('./models/homework')
 const homeworkRouter = require('./routes/homeworks')
@@ -26,26 +25,20 @@ app.get('/', async (req, res) => {
 
 app.use('/homeworks', homeworkRouter)
 
-
-// Set static folder
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 const botName = 'Learnt';
 
-// Run when client connects
 io.on('connection', socket => {
     socket.on('joinRoom', ({ username, room}) => {
         const user = userJoin(socket.id, username, room);
 
         socket.join(user.room);
 
-    // Welcome current user
     socket.emit('message', formatMessage(botName, 'Communicate with the class'));
 
-    // Broadcast when a user connects
     socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined the chat`));
     
-    // Send users and room info
     io.to(user.room).emit('roomUsers' , {
         room: user.room,
         users: getRoomUsers(user.room)
@@ -54,21 +47,18 @@ io.on('connection', socket => {
 
     });
 
-    // Listen for chat message
     socket.on('chatMessage', (msg) => {
         const user = getCurrentUser(socket.id);
 
         io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
 
-    // Runs when client disconnects
     socket.on('disconnect', () => {
         const user = userLeave(socket.id);
 
         if(user){
             io.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`));
 
-            // Send users and room info
             io.to(user.room).emit('roomUsers' , {
             room: user.room,
             users: getRoomUsers(user.room)
